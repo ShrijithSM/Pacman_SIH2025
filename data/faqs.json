@@ -1,0 +1,54 @@
+[
+    {
+        "question_en": "When is the fee payment deadline?",
+        "question_hi": "फीस भुगतान की अंतिम तिथि कब है?",
+        "question_ta": "கட்டணம் செலுத்தும் காலக்கெடு எப்போது?",
+        "question_te": "ఫీజు చెల్లింపు గడువు ఎప్పుడు?",
+        "question_bn": "ফি প্রদানের শেষ তারিখ কখন?",
+        "answer_en": "The fee payment deadline is 15th of every month.",
+        "answer_hi": "फीस भुगतान की अंतिम तिथि हर महीने की 15 तारीख है।",
+        "answer_ta": "கட்டணம் செலுத்தும் காலக்கெடு ஒவ்வொரு மாதமும் 15 ஆம் தேதி.",
+        "answer_te": "ఫీజు చెల్లింపు గడువు ప్రతి నెల 15వ తేదీ.",
+        "answer_bn": "ফি প্রদানের শেষ তারিখ প্রতি মাসের 15 তারিখ।",
+        "intent": "fee_deadline"
+    },
+    {
+        "question_en": "How to apply for scholarship?",
+        "question_hi": "छात्रवृत्ति के लिए आवेदन कैसे करें?",
+        "question_ta": "பொறுப்புத் துறப்பு கோரிக்கை எப்படி செய்வது?",
+        "question_te": "స్కాలర్షిప్ కోసం ఎలా అప్లై చేయాలి?",
+        "question_bn": "বৃত্তির জন্য如何申请?",
+        "answer_en": "You can apply for scholarship through the student portal using your credentials.",
+        "answer_hi": "आप अपने credentials का उपयोग करके छात्र पोर्टल के माध्यम से छात्रवृत्ति के लिए आवेदन कर सकते हैं।",
+        "answer_ta": "மாணவர் போர்ட்டலைப் பயன்படுத்தி உங்கள் அங்கீகாரங்களைப் பயன்படுத்தி பொறுப்புத் துறப்பு கோரிக்கை செய்யலாம்.",
+        "answer_te": "మీరు మీ credentials ఉపయోగించి విద్యార్థి పోర్టల్ ద్వారా స్కాలర్షిప్ కోసం దరఖాస్తు చేసుకోవచ్చు.",
+        "answer_bn": "আপনি আপনার credentials ব্যবহার করে student portal এর মাধ্যমে বৃত্তির জন্য申请 করতে পারেন।",
+        "intent": "scholarship_application"
+    },
+    {
+        "question_en": "Where is the examination department?",
+        "question_hi": "परीक्षा विभाग कहाँ है?",
+        "question_ta": "தேர்வு துறை எங்கே உள்ளது?",
+        "question_te": "పరీక్షా విభాగం ఎక్కడ ఉంది?",
+        "question_bn": "পরীক্ষা বিভাগটি কোথায়?",
+        "answer_en": "The examination department is located on the 2nd floor of the administration building.",
+        "answer_hi": "परीक्षा विभाग प्रशासनिक भवन की दूसरी मंजिल पर स्थित है।",
+        "answer_ta": "தேர்வு துறை நிர்வாக கட்டிடத்தின் 2வது மாடியில் அமைந்துள்ளது.",
+        "answer_te": "పరీక్షా విభాగం అడ్మినిస్ట్రేషన్ భవనం 2వ అంతస్తులో ఉంది.",
+        "answer_bn": "পরীক্ষা বিভাগটি প্রশাসনিক ভবনের 2য় তলায় অবস্থিত।",
+        "intent": "exam_dept_location"
+    },
+    {
+        "question_en": "What are the library timings?",
+        "question_hi": "पुस्तकालय का समय क्या है?",
+        "question_ta": "நூலக நேரங்கள் என்ன?",
+        "question_te": "లైబ్రరీ టైమింగ్స్ ఏమిటి?",
+        "question_bn": "লাইব্রেরির সময়সূচী是什么?",
+        "answer_en": "The library is open from 8 AM to 8 PM on weekdays and 9 AM to 5 PM on weekends.",
+        "answer_hi": "पुस्तकालय सप्ताह के दिनों में सुबह 8 बजे से रात 8 बजे तक और सप्ताहांत में सुबह 9 बजे से शाम 5 बजे तक खुला रहता है।",
+        "answer_ta": "நூலகம் வாரத்தின் நாட்களில் காலை 8 மணி முதல் இரவு 8 மணி வரையும், வார இறுதியில் காலை 9 மணி முதல் மாலை 5 மணி வரையும் திறந்திருக்கும்.",
+        "answer_te": "లైబ్రరీ వారంలో 8 AM నుండి 8 PM వరకు మరియు వారాంతంలో 9 AM నుండి 5 PM వరకు తెరిచి ఉంటుంది.",
+        "answer_bn": "লাইব্রেরি সপ্তাহের দিনগুলিতে সকাল 8টা থেকে রাত 8টা পর্যন্ত এবং সপ্তাহান্তে সকাল 9টা থেকে বিকাল 5টা পর্যন্ত খোলা থাকে।",
+        "intent": "library_timings"
+    }
+]
