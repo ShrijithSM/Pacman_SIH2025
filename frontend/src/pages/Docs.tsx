@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Code, Copy, ExternalLink, Zap, Palette, Globe } from 'lucide-react';
+import { Code, Copy, ExternalLink, Zap, Palette, Globe, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Docs = () => {
@@ -23,14 +23,15 @@ const Docs = () => {
   data-language="en"
 ></script>`;
 
-  const reactImportCode = `import { CampusChatbot } from 'campus-assistant-widget';
+  const reactImportCode = `import ChatbotWidget from './components/ChatbotWidget';
 
 function App() {
   return (
     <div>
       {/* Your app content */}
-      
-      <CampusChatbot
+
+      <ChatbotWidget
+        isEmbedded={true}
         position="bottom-right"
         primaryColor="#3B82F6"
         language="en"
@@ -44,7 +45,7 @@ function App() {
       prop: 'data-theme-color / primaryColor',
       type: 'string',
       default: '#3B82F6',
-      description: 'Primary color for the chatbot interface'
+      description: 'Primary color for the chatbot interface (--theme-color CSS variable)'
     },
     {
       prop: 'data-position / position',
@@ -57,7 +58,26 @@ function App() {
       type: 'string',
       default: 'en',
       description: 'Default language: "en" (English), "hi" (Hindi), or "local"'
+    },
+    {
+      prop: 'isEmbedded',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the widget starts minimized as a floating button'
     }
+  ];
+
+  const featuresList = [
+    'Responsive design for mobile and desktop',
+    'Expandable chat window with backdrop blur',
+    'Language detection and switcher dropdown',
+    'Typing indicators with animated dots',
+    'Message timestamps',
+    'Left-aligned messages (not centered)',
+    'Smooth scrolling within chat container only',
+    'Customizable theme colors via --theme-color CSS variable',
+    'Multi-language support (English, Hindi, Local)',
+    'Reusable React component with props'
   ];
 
   return (
@@ -88,7 +108,7 @@ function App() {
             <Zap className="h-6 w-6 text-primary" />
             <h2 className="text-2xl font-bold text-foreground">Quick Start</h2>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             {/* HTML Embed */}
             <Card className="shadow-card hover:shadow-hover transition-shadow duration-300">
@@ -149,7 +169,7 @@ function App() {
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Install via npm: <code className="bg-secondary px-1 rounded">npm install campus-assistant-widget</code>
+                  Use the ChatbotWidget component directly in your React application.
                 </p>
               </CardContent>
             </Card>
@@ -159,10 +179,10 @@ function App() {
         {/* Configuration Options */}
         <section className="mb-12">
           <div className="flex items-center gap-2 mb-6">
-            <Palette className="h-6 w-6 text-primary" />
+            <Settings className="h-6 w-6 text-primary" />
             <h2 className="text-2xl font-bold text-foreground">Configuration Options</h2>
           </div>
-          
+
           <Card className="shadow-card">
             <CardHeader>
               <CardTitle>Customization Properties</CardTitle>
@@ -205,13 +225,40 @@ function App() {
           </Card>
         </section>
 
+        {/* Features */}
+        <section className="mb-12">
+          <div className="flex items-center gap-2 mb-6">
+            <Palette className="h-6 w-6 text-primary" />
+            <h2 className="text-2xl font-bold text-foreground">Features</h2>
+          </div>
+
+          <Card className="shadow-card">
+            <CardHeader>
+              <CardTitle>Built-in Functionality</CardTitle>
+              <CardDescription>
+                Everything included in the chatbot widget
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="grid md:grid-cols-2 gap-2">
+                {featuresList.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
+
         {/* Language Support */}
         <section className="mb-12">
           <div className="flex items-center gap-2 mb-6">
             <Globe className="h-6 w-6 text-primary" />
             <h2 className="text-2xl font-bold text-foreground">Multi-language Support</h2>
           </div>
-          
+
           <Card className="shadow-card">
             <CardContent className="pt-6">
               <div className="grid md:grid-cols-3 gap-4">
@@ -235,7 +282,7 @@ function App() {
         {/* Advanced Examples */}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6">Advanced Examples</h2>
-          
+
           <Card className="shadow-card">
             <CardHeader>
               <CardTitle>Custom Styling Example</CardTitle>
