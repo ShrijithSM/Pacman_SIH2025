@@ -1,27 +1,35 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+// frontend/vite.config.ts
+import path from "path"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "localhost",
-    port: 8088,
-    proxy: {
-      // Proxy API calls to FastAPI backend in dev to avoid CORS
-      "/api": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-        // preserve path, supports file uploads and SSE
-        secure: false,
-      },
-    },
-  },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-}));
+  build: {
+    rollupOptions: {
+      input: {
+        // The main app entry for your website (e.g., localhost:5173)
+        main: path.resolve(__dirname, 'index.html'),
+        // The embeddable widget entry
+        embed: path.resolve(__dirname, 'src/embed.tsx'),
+      },
+      output: {
+        // Ensure the embed script has a consistent name
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'embed') {
+            return 'embed.js';
+          }
+          return 'assets/[name]-[hash].js';
+        },
+        // Keep asset names consistent
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+      },
+    },
+  },
+})
