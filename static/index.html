@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Multilingual Chatbot</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .chat-container { 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            height: 400px; 
+            overflow-y: scroll; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .message { 
+            margin-bottom: 15px; 
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .user-message { 
+            text-align: right; 
+            background-color: #e3f2fd;
+            margin-left: 20%;
+        }
+        .bot-message { 
+            text-align: left; 
+            background-color: #f3e5f5;
+            margin-right: 20%;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        #language-select { 
+            padding: 10px; 
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 120px;
+        }
+        #user-input { 
+            flex-grow: 1;
+            padding: 10px; 
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 5px;
+        }
+        .language-badge {
+            position: absolute;
+            top: 5px;
+            font-size: 0.7em;
+            background-color: rgba(0,0,0,0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .user-message .language-badge {
+            left: 5px;
+        }
+        .bot-message .language-badge {
+            right: 5px;
+        }
+        .language-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏫 Campus Multilingual Chatbot</h1>
+        <p>Ask questions about fees, scholarships, exams, and more in your preferred language</p>
+        <p><small>I will respond in the same language you use to ask questions</small></p>
+    </div>
+    
+    <select id="language-select">
+        <option value="auto">Auto-detect</option>
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="ta">Tamil</option>
+        <option value="te">Telugu</option>
+        <option value="bn">Bengali</option>
+    </select>
+    
+    <div id="chat-container" class="chat-container"></div>
+    
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const sessionId = Date.now().toString(); // Generate unique session ID
+        let selectedLanguage = 'auto';
+        const languageNames = {
+            'en': 'English',
+            'hi': 'Hindi',
+            'ta': 'Tamil', 
+            'te': 'Telugu',
+            'bn': 'Bengali',
+            'auto': 'Auto-detect'
+        };
+        
+        document.getElementById('language-select').addEventListener('change', function() {
+            selectedLanguage = this.value;
+        });
+        
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage('user', message, selectedLanguage === 'auto' ? 'detecting...' : languageNames[selectedLanguage]);
+            userInput.value = '';
+            
+            // Prepare request data
+            const requestData = {
+                message: message,
+                session_id: sessionId
+            };
+            
+            // If not auto-detect, set the language
+            if (selectedLanguage !== 'auto') {
+                requestData.language = selectedLanguage;
+            }
+            
+            // Send to backend
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage('bot', data.response, languageNames[data.response_language] || 'English');
+            })
+            .catch(error => {
+                addMessage('bot', 'Sorry, I encountered an error. Please try again.', 'English');
+                console.error('Error:', error);
+            });
+        }
+        
+        function addMessage(sender, text, language) {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            
+            // Add language badge
+            const languageBadge = document.createElement('div');
+            languageBadge.classList.add('language-badge');
+            languageBadge.innerHTML = `<span class="language-name">${language}</span>`;
+            messageDiv.appendChild(languageBadge);
+            
+            const messageText = document.createElement('div');
+            messageText.textContent = sender === 'user' ? `You: ${text}` : `Bot: ${text}`;
+            messageText.style.marginTop = '15px';
+            messageDiv.appendChild(messageText);
+            
+            const timestamp = document.createElement('div');
+            timestamp.classList.add('timestamp');
+            timestamp.textContent = new Date().toLocaleTimeString();
+            messageDiv.appendChild(timestamp);
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Allow sending message with Enter key
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Add welcome message
+        setTimeout(() => {
+            addMessage('bot', 'Hello! I am your campus assistant. How can I help you today? Ask me in any supported language, and I will respond in the same language.', 'English');
+        }, 500);
+    </script>
+</body>
+</html>

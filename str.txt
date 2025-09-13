@@ -1,0 +1,18 @@
+sih-chatbot/
+│
+├── app.py                 # Main application
+├── models/               # ML models
+│   ├── intent_classifier.py
+│   └── translator.py
+├── data/                 # Datasets and knowledge base
+│   ├── training_data.csv
+│   ├── faqs_en.json
+│   ├── faqs_hi.json
+│   └── ...
+├── utils/                # Utility functions
+│   ├── preprocessor.py
+│   ├── database.py
+│   └── logger.py
+├── static/               # Frontend assets
+│   └── index.html
+└── requirements.txt
